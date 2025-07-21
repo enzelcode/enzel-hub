@@ -19,6 +19,7 @@ func main() {
 	app := fiber.New()
 
 	routes.PingRoute(app)
+	routes.AuthRoutes(app)
 
 	log.Fatal(app.Listen(":3000"))
 }
