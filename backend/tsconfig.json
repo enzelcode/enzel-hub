@@ -8,9 +8,9 @@
     "rootDir": "./src",
     "strict": true,
     "moduleResolution": "node",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./*"]
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
