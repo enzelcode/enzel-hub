@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
 import { Button } from '@/components/ui/button';
 import { Plus, Filter } from 'lucide-react';
 import { KanbanColumn } from '@/components/kanban-column';
