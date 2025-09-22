@@ -7,7 +7,7 @@ import { Plus, Filter } from 'lucide-react';
 import { KanbanColumn } from '@/components/kanban-column';
 import { TaskCard } from '@/components/task-card';
 import { CreateTaskModal } from '@/components/create-task-modal';
-import { TaskService, Task } from '@/services/taskService';
+import { TaskService } from '@/services/taskService';
 import { ProjectService, Project } from '@/services/projectService';
 import { TeamMemberService, TeamMember } from '@/services/teamMemberService';
 

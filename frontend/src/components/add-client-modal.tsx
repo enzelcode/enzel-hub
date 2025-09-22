@@ -163,8 +163,8 @@ export function AddClientModal({ isOpen, onClose, onClientAdded }: AddClientModa
               <Label htmlFor="status">Status</Label>
               <Select
                 value={formData.status}
-                onValueChange={(value: 'active' | 'inactive') =>
-                  setFormData({ ...formData, status: value })
+                onValueChange={(value) =>
+                  setFormData({ ...formData, status: value as 'active' | 'inactive' })
                 }
               >
                 <SelectTrigger className="border-[#131e1f]">

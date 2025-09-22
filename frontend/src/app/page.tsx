@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -40,7 +41,7 @@ export default function LoginPage() {
       } else {
         setError(data.error || 'Erro ao fazer login');
       }
-    } catch (error) {
+    } catch {
       setError('Erro de conexão com o servidor');
     } finally {
       setIsLoading(false);
@@ -53,9 +54,11 @@ export default function LoginPage() {
         {/* Logo/Header */}
         <div className="text-center space-y-6">
           <div className="flex justify-center">
-            <img
+            <Image
               src="/enzelcode.webp"
               alt="Enzel Code"
+              width={144}
+              height={144}
               className="h-36 w-auto"
             />
           </div>
