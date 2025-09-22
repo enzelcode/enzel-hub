@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { ApiResponse } from '../types';
-import { generateToken, comparePassword, findUserByEmail } from '../utils/auth';
+import { generateToken, comparePassword, findUserByEmail, findUserByEmailMock, MOCK_USERS } from '../utils/auth';
 
 interface LoginRequest {
   email: string;
@@ -21,8 +21,15 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Find user
-    const user = findUserByEmail(email.toLowerCase());
+    // Find user (try DynamoDB first, fallback to mock)
+    let user;
+    try {
+      user = await findUserByEmail(email.toLowerCase());
+    } catch (error) {
+      console.log('DynamoDB error, using fallback mock user');
+      user = findUserByEmailMock(email.toLowerCase());
+    }
+
     if (!user) {
       const response: ApiResponse = {
         success: false,

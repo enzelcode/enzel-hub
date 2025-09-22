@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { v4 as uuidv4 } from 'uuid';
 import { User } from '../types';
+import { UserRepository } from '../repositories/userRepository';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
@@ -35,12 +37,49 @@ export const comparePassword = async (password: string, hashedPassword: string):
   return bcrypt.compare(password, hashedPassword);
 };
 
-// Mock user database - Leonardo's account
+export const findUserByEmail = async (email: string): Promise<User | null> => {
+  return UserRepository.findByEmail(email);
+};
+
+// Initialize Leonardo's user in DynamoDB
+export const initializeMockUsers = async () => {
+  try {
+    // Check if Leonardo already exists
+    const existingUser = await UserRepository.findByEmail('leonardo@enzelcode.com');
+
+    if (!existingUser) {
+      const hashedPassword = await hashPassword('frizzi090520');
+      const leonardoUser: User = {
+        id: 'user_leonardo_001',
+        email: 'leonardo@enzelcode.com',
+        password: hashedPassword,
+        name: 'Leonardo',
+        role: 'admin',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      await UserRepository.create(leonardoUser);
+      console.log('✅ Leonardo user created successfully in DynamoDB');
+    } else {
+      console.log('⚠️  Leonardo user already exists in DynamoDB');
+    }
+  } catch (error) {
+    console.error('❌ Error initializing Leonardo user:', error);
+
+    // Fallback to mock user if DynamoDB fails
+    console.log('🔄 Falling back to mock user database');
+    const hashedPassword = await hashPassword('frizzi090520');
+    MOCK_USERS[0].password = hashedPassword;
+  }
+};
+
+// Fallback mock database
 export const MOCK_USERS: User[] = [
   {
     id: 'user_leonardo_001',
     email: 'leonardo@enzelcode.com',
-    password: '', // Will be set with hashed password
+    password: '',
     name: 'Leonardo',
     role: 'admin',
     createdAt: new Date().toISOString(),
@@ -48,12 +87,7 @@ export const MOCK_USERS: User[] = [
   }
 ];
 
-// Initialize Leonardo's hashed password
-export const initializeMockUsers = async () => {
-  const hashedPassword = await hashPassword('frizzi090520');
-  MOCK_USERS[0].password = hashedPassword;
-};
-
-export const findUserByEmail = (email: string): User | undefined => {
+// Fallback function for when DynamoDB is not available
+export const findUserByEmailMock = (email: string): User | undefined => {
   return MOCK_USERS.find(user => user.email === email);
 };
