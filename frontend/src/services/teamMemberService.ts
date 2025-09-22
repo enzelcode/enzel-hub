@@ -69,12 +69,12 @@ export class TeamMemberService {
   }
 
   static async createTeamMember(data: CreateTeamMemberData): Promise<TeamMember> {
-    const response = await apiService.post<ApiResponse<TeamMember>>(this.baseUrl, data as Record<string, unknown>);
+    const response = await apiService.post<ApiResponse<TeamMember>>(this.baseUrl, data);
     return response.data;
   }
 
   static async updateTeamMember(id: string, data: UpdateTeamMemberData): Promise<TeamMember> {
-    const response = await apiService.put<ApiResponse<TeamMember>>(`${this.baseUrl}/${id}`, data as Record<string, unknown>);
+    const response = await apiService.put<ApiResponse<TeamMember>>(`${this.baseUrl}/${id}`, data);
     return response.data;
   }
 
@@ -83,7 +83,7 @@ export class TeamMemberService {
   }
 
   static async updateTeamMemberStatus(id: string, status: TeamMember['status']): Promise<TeamMember> {
-    const response = await apiService.patch<ApiResponse<TeamMember>>(`${this.baseUrl}/${id}/status`, { status } as Record<string, unknown>);
+    const response = await apiService.patch<ApiResponse<TeamMember>>(`${this.baseUrl}/${id}/status`, { status });
     return response.data;
   }
 }

@@ -66,12 +66,12 @@ export class TaskService {
   }
 
   static async createTask(data: CreateTaskData): Promise<Task> {
-    const response = await apiService.post<ApiResponse<Task>>(this.baseUrl, data as Record<string, unknown>);
+    const response = await apiService.post<ApiResponse<Task>>(this.baseUrl, data);
     return response.data;
   }
 
   static async updateTask(id: string, data: UpdateTaskData): Promise<Task> {
-    const response = await apiService.put<ApiResponse<Task>>(`${this.baseUrl}/${id}`, data as Record<string, unknown>);
+    const response = await apiService.put<ApiResponse<Task>>(`${this.baseUrl}/${id}`, data);
     return response.data;
   }
 
@@ -80,7 +80,7 @@ export class TaskService {
   }
 
   static async updateTaskStatus(id: string, status: Task['status']): Promise<Task> {
-    const response = await apiService.patch<ApiResponse<Task>>(`${this.baseUrl}/${id}/status`, { status } as Record<string, unknown>);
+    const response = await apiService.patch<ApiResponse<Task>>(`${this.baseUrl}/${id}/status`, { status });
     return response.data;
   }
 }

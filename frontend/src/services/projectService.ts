@@ -64,12 +64,12 @@ export class ProjectService {
   }
 
   static async createProject(data: CreateProjectData): Promise<Project> {
-    const response = await apiService.post<ApiResponse<Project>>(this.baseUrl, data as Record<string, unknown>);
+    const response = await apiService.post<ApiResponse<Project>>(this.baseUrl, data);
     return response.data;
   }
 
   static async updateProject(id: string, data: UpdateProjectData): Promise<Project> {
-    const response = await apiService.put<ApiResponse<Project>>(`${this.baseUrl}/${id}`, data as Record<string, unknown>);
+    const response = await apiService.put<ApiResponse<Project>>(`${this.baseUrl}/${id}`, data);
     return response.data;
   }
 
